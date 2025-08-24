@@ -1,16 +1,32 @@
 import React from "react";
+import TaskSearchBar from "./TaskSearchBar";
+import { Icon } from "@iconify/react";
+import FilterBtn from "./FilterBtn";
+import AddTaskModal from "./AddTaskModal";
+import AddColumnModal from "./AddColoumnModel";
 
 const Header = () => {
   return (
-    <div className="w-full">
-      <div className="text-white p-4 text-center w-full border-b-2 border-[#64748b]">
+    <header className="w-full bg-gray-900">
+      {/* Top title bar */}
+      <div className="text-white p-4 text-center border-b-2 border-b-[#64748b]">
         <h1 className="text-2xl font-bold">Kanban Board</h1>
       </div>
-      <div className="flex justify-between items-center py-4">
-        <div>Project Name</div>
-        <div>Search Bar, </div>
+
+      {/* Sub-header with controls */}
+      <div className="flex flex-wrap justify-between items-center px-4 py-3 text-white gap-3">
+        {/* Left side */}
+        <div className="font-semibold text-lg">Project Name</div>
+
+        {/* Right side controls */}
+        <div className="flex flex-wrap gap-2 items-center">
+          <TaskSearchBar />
+          <FilterBtn />
+          <AddTaskModal />
+          <AddColumnModal />
+        </div>
       </div>
-    </div>
+    </header>
   );
 };
 
