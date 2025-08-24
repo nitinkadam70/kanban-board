@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ReduxWrapper from "./ReduxWrapper";
 
 export const metadata = {
   title: "Create Next App",
@@ -9,7 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ReduxWrapper>{children}</ReduxWrapper>
+      </body>
     </html>
   );
 }

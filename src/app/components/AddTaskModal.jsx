@@ -1,10 +1,37 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask } from "../features/kanbanActions";
 
 const AddTaskModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [newTask, setNewTask] = useState({
+    title: "",
+    description: "",
+    status: "",
+  });
+  const dispatch = useDispatch();
+  const { columnsData } = useSelector((state) => state.columns);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewTask((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { title, description, status } = newTask;
+    console.log("New Task:", newTask);
+    if (!title || !description || !status) {
+      alert("Please fill in all fields");
+      return;
+    }
+    dispatch(addTask({ title, description, status }));
+    setNewTask({ title: "", description: "", status: "" });
+    setIsOpen(false);
+  };
   return (
     <div>
       {/* Button to open modal */}
@@ -38,7 +65,7 @@ const AddTaskModal = () => {
             </div>
 
             {/* Body */}
-            <form className="p-4 space-y-4">
+            <form className="p-4 space-y-4" onSubmit={handleSubmit}>
               {/* Title */}
               <div>
                 <label
@@ -48,8 +75,9 @@ const AddTaskModal = () => {
                   Title
                 </label>
                 <input
+                  name="title"
+                  onChange={handleChange}
                   type="text"
-                  id="title"
                   placeholder="Enter Task Title"
                   className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   required
@@ -65,13 +93,16 @@ const AddTaskModal = () => {
                   Status
                 </label>
                 <select
-                  id="status"
+                  name="status"
+                  onChange={handleChange}
                   className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 >
-                  <option>Select Status</option>
-                  <option value="todo">To Do</option>
-                  <option value="inprogress">In Progress</option>
-                  <option value="done">Done</option>
+                  <option value="">Select Status</option>
+                  {columnsData?.map((column) => (
+                    <option key={column.id} value={column.title}>
+                      {column.title}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -84,7 +115,8 @@ const AddTaskModal = () => {
                   Description
                 </label>
                 <textarea
-                  id="description"
+                  name="description"
+                  onChange={handleChange}
                   rows="3"
                   placeholder="Enter Task Description"
                   className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"

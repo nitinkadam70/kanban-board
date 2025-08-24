@@ -4,10 +4,11 @@ import { Icon } from "@iconify/react";
 import React, { useEffect, useRef, useState } from "react";
 import EditTaskModal from "./EditTaskModel";
 
-const TaskCard = ({ bgColor = "blue" }) => {
+const TaskCard = ({ task }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
   const [isOpenEditModel, setIsOpenEditModel] = useState(false);
+  const { title, description, id } = task;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -55,16 +56,13 @@ const TaskCard = ({ bgColor = "blue" }) => {
         </div>
 
         <h5 className="mb-2 text-xl font-semibold tracking-tight text-white">
-          Need a help in Claim?
+          {title}
         </h5>
 
-        <p className="mb-3 font-normal text-gray-400">
-          Go to this step by step guideline process on how to certify for your
-          weekly benefits:
-        </p>
+        <p className="mb-3 font-normal text-gray-400">{description}</p>
       </div>
       {isOpenEditModel && (
-        <EditTaskModal onClose={() => setIsOpenEditModel(false)} />
+        <EditTaskModal id={id} onClose={() => setIsOpenEditModel(false)} />
       )}
     </>
   );

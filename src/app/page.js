@@ -1,8 +1,12 @@
+"use client";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import TaskColumn from "./components/TaskColumn";
-import { columnsData } from "./utils/data";
+import { useSelector } from "react-redux";
 
 export default function Home() {
+  const { columnsData } = useSelector((state) => state.columns);
+
   return (
     <div className="container mx-auto">
       <Header />
@@ -10,7 +14,11 @@ export default function Home() {
         <div className="w-full flex justify-around items-center gap-2 ml-2 overflow-x-auto">
           {columnsData.map((column) => (
             <div key={column.id} className="w-full mx-auto">
-              <TaskColumn title={column.title} bgColor={column.bgColor} />
+              <TaskColumn
+                tasks={column?.tasks}
+                title={column.title}
+                bgColor={column.bgColor}
+              />
             </div>
           ))}
         </div>

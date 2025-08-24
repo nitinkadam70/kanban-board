@@ -15,7 +15,7 @@ const colorClasses = {
     "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300",
 };
 
-const TaskColumn = ({ title, bgColor }) => {
+const TaskColumn = ({ title, bgColor, tasks }) => {
   return (
     <div className="min-w-[300px] w-full max-w-[400px] h-[600px] border-2 border-blue-400 rounded-md shadow-md flex flex-col">
       <div className="font-bold text-white text-lg text-center p-2 border-b-2 border-blue-400">
@@ -26,7 +26,11 @@ const TaskColumn = ({ title, bgColor }) => {
         </span>
       </div>
       <div>
-        <TaskCard />
+        {tasks.map((task) => (
+          <div key={task.id}>
+            <TaskCard task={task} />
+          </div>
+        ))}
       </div>
     </div>
   );
