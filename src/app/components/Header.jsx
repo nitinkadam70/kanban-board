@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import FilterBtn from "./FilterBtn";
 import AddTaskModal from "./AddTaskModal";
 import AddColumnModal from "./AddColoumnModel";
+import ThemeToggler from "./ThemeToggler";
 
 const Header = () => {
   return (
@@ -24,6 +25,7 @@ const Header = () => {
           <FilterBtn />
           <AddTaskModal />
           <AddColumnModal />
+          <ThemeToggler />
         </div>
       </div>
     </header>

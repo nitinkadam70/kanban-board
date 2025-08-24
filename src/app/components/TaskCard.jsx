@@ -1,12 +1,25 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import EditTaskModal from "./EditTaskModel";
 
 const TaskCard = ({ bgColor = "blue" }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef(null);
   const [isOpenEditModel, setIsOpenEditModel] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -15,7 +28,7 @@ const TaskCard = ({ bgColor = "blue" }) => {
           <Icon icon="mingcute:task-2-fill" className="w-7 h-7 text-gray-400" />
 
           {/* Card menu */}
-          <div className="relative">
+          <div className="relative" ref={menuRef}>
             <Icon
               icon="charm:menu-kebab"
               className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-200"
