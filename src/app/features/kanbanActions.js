@@ -105,12 +105,38 @@ export const columnsSlice = createSlice({
     editTask: (state, action) => {
       const { taskId, updates } = action.payload;
 
-      // Find column containing this task
+      // Find the column where the task is currently
+      let currentColumn = null;
+      let taskIndex = -1;
+
       for (const col of state.columnsData) {
-        const task = col.tasks.find((t) => t.id === taskId);
-        if (task) {
-          Object.assign(task, updates);
+        taskIndex = col.tasks.findIndex((t) => t.id === taskId);
+        if (taskIndex !== -1) {
+          currentColumn = col;
           break;
+        }
+      }
+
+      if (currentColumn) {
+        const task = currentColumn.tasks[taskIndex];
+
+        // If status is updated
+        if (updates.status && updates.status !== task.status) {
+          // Remove from current column
+          currentColumn.tasks.splice(taskIndex, 1);
+
+          // Find new column based on status
+          const newColumn = state.columnsData.find(
+            (c) => c.columnName.toLowerCase() === updates.status.toLowerCase()
+          );
+
+          if (newColumn) {
+            // Update task and move to new column
+            newColumn.tasks.push({ ...task, ...updates });
+          }
+        } else {
+          // Just update inside same column
+          Object.assign(task, updates);
         }
       }
     },

@@ -1,5 +1,6 @@
 import React from "react";
 import TaskCard from "./TaskCard";
+import { Icon } from "@iconify/react";
 
 const colorClasses = {
   blue: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
@@ -18,12 +19,16 @@ const colorClasses = {
 const TaskColumn = ({ columnName, columnColor, tasks }) => {
   return (
     <div className="min-w-[300px] w-full max-w-[400px] h-[600px] border-2 border-blue-400 rounded-md shadow-md flex flex-col">
-      <div className="font-bold text-white text-lg text-center p-2 border-b-2 border-blue-400">
+      <div className="font-bold flex justify-center relative text-white text-lg text-center p-2 border-b-2 border-blue-400">
         <span
           className={`${colorClasses[columnColor]} text-[14px] me-2 px-2.5 py-0.5 rounded-full font-semibold`}
         >
           • {columnName}
         </span>
+        <Icon
+          icon="mdi:delete"
+          className="w-5 h-5 hover:text-blue-200 text-blue-100 absolute right-2 top-3"
+        />
       </div>
       <div>
         {tasks.map((task) => (
