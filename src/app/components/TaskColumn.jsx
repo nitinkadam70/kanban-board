@@ -44,7 +44,13 @@ const TaskColumn = ({ columnName, columnColor, tasks, index, id }) => {
           />
         )}
       </div>
-      <div>
+      <div
+        className="overflow-y-auto w-full h-full scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent hover:scrollbar-thumb-gray-500"
+        style={{
+          scrollbarWidth: "thin",
+          scrollbarColor: "rgba(156, 163, 175, 0.2) transparent",
+        }}
+      >
         {tasks.map((task) => (
           <div key={task.id}>
             <TaskCard task={task} />
