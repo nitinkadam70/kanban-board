@@ -13,20 +13,20 @@ const initialState = {
   columnsData: [
     {
       id: nanoid(),
-      title: "To Do",
-      bgColor: "gray",
+      columnName: "To Do",
+      columnColor: "gray",
       tasks: [],
     },
     {
       id: nanoid(),
-      title: "In Progress",
-      bgColor: "blue",
+      columnName: "In Progress",
+      columnColor: "blue",
       tasks: [],
     },
     {
       id: nanoid(),
-      title: "Done",
-      bgColor: "green",
+      columnName: "Done",
+      columnColor: "green",
       tasks: [],
     },
   ],
@@ -46,13 +46,13 @@ export const columnsSlice = createSlice({
   reducers: {
     // ========== COLUMN OPERATIONS ==========
     addColumn: (state, action) => {
-      let { title, bgColor } = action.payload;
+      let { columnName, columnColor } = action.payload;
 
       // Prevent duplicate column names
-      const titleExists = state.columnsData.some(
-        (col) => col.title.toLowerCase() === title.toLowerCase()
+      const columnNameExists = state.columnsData.some(
+        (col) => col.columnName.toLowerCase() === columnName.toLowerCase()
       );
-      if (titleExists) {
+      if (columnNameExists) {
         if (typeof window !== "undefined") {
           alert("Use another column name, it's already exists!");
         }
@@ -61,14 +61,14 @@ export const columnsSlice = createSlice({
 
       // Pick random color if not provided
       const colors = ["yellow", "red", "pink", "purple", "indigo"];
-      if (!bgColor) {
-        bgColor = colors[Math.floor(Math.random() * colors.length)];
+      if (!columnColor) {
+        columnColor = colors[Math.floor(Math.random() * colors.length)];
       }
 
       state.columnsData.push({
         id: nanoid(),
-        title,
-        bgColor,
+        columnName: columnName,
+        columnColor,
         tasks: [],
       });
     },

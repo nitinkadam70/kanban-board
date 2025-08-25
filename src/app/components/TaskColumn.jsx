@@ -15,14 +15,14 @@ const colorClasses = {
     "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300",
 };
 
-const TaskColumn = ({ title, bgColor, tasks }) => {
+const TaskColumn = ({ columnName, columnColor, tasks }) => {
   return (
     <div className="min-w-[300px] w-full max-w-[400px] h-[600px] border-2 border-blue-400 rounded-md shadow-md flex flex-col">
       <div className="font-bold text-white text-lg text-center p-2 border-b-2 border-blue-400">
         <span
-          className={`${colorClasses[bgColor]} text-[14px] me-2 px-2.5 py-0.5 rounded-full font-semibold`}
+          className={`${colorClasses[columnColor]} text-[14px] me-2 px-2.5 py-0.5 rounded-full font-semibold`}
         >
-          • {title}
+          • {columnName}
         </span>
       </div>
       <div>

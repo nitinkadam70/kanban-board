@@ -16,8 +16,8 @@ export default function Home() {
             <div key={column.id} className="w-full mx-auto">
               <TaskColumn
                 tasks={column?.tasks}
-                title={column.title}
-                bgColor={column.bgColor}
+                columnName={column.columnName}
+                columnColor={column.columnColor}
               />
             </div>
           ))}

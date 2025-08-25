@@ -1,9 +1,23 @@
 "use client";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
+import { addColumn } from "../features/kanbanActions";
+import { useDispatch } from "react-redux";
 
 const AddColumnModal = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    columnName: "",
+    columnColor: "",
+  });
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // const formData = new FormData(e.target);
+    dispatch(addColumn(formData));
+    setIsOpen(false);
+  };
 
   return (
     <div>
@@ -38,8 +52,7 @@ const AddColumnModal = () => {
             </div>
 
             {/* Body */}
-            <form className="p-4 space-y-4">
-              {/* Column Name */}
+            <form className="p-4 space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="columnName"
@@ -48,8 +61,14 @@ const AddColumnModal = () => {
                   Column Name
                 </label>
                 <input
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      columnName: e.target.value,
+                    }))
+                  }
                   type="text"
-                  id="columnName"
+                  name="columnName"
                   placeholder="Enter column name"
                   className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   required
