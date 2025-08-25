@@ -1,25 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { editTask, selectTaskById } from "../features/kanbanActions";
 
-const EditTaskModal = ({ onClose }) => {
+const EditTaskModal = ({ id, onClose }) => {
+  const dispatch = useDispatch();
+
   // Manage all fields in one state object
   const [formData, setFormData] = useState({
-    title: "Sample Task Title",
-    status: "inprogress",
-    description: "This is a sample task description...",
+    id: "",
+    title: "",
+    status: "",
+    description: "",
   });
 
-  // Handle input changes
+  //  Get task by ID using selector
+  const task = useSelector((state) => selectTaskById(state, id));
+
+  //  Update formData when task changes
+  useEffect(() => {
+    if (task) {
+      //console.log("get task", task);
+      setFormData({
+        id: task.id,
+        title: task.title,
+        status: task.status,
+        description: task.description,
+      });
+    }
+  }, [task]);
+
+  // Handle change
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value })); // ✅ fixed bug
   };
 
+  //  Handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Updated Task:", formData); // later connect API
-    onClose(); // close after save
+    dispatch(editTask({ taskId: formData.id, updates: formData })); // ✅ update redux
+    onClose();
   };
 
   return (
@@ -51,7 +73,7 @@ const EditTaskModal = ({ onClose }) => {
             </label>
             <input
               type="text"
-              id="title"
+              name="title"
               value={formData.title}
               onChange={handleChange}
               className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -68,14 +90,15 @@ const EditTaskModal = ({ onClose }) => {
               Status
             </label>
             <select
-              id="status"
+              name="status"
               value={formData.status}
               onChange={handleChange}
               className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             >
-              <option value="todo">To Do</option>
-              <option value="inprogress">In Progress</option>
-              <option value="done">Done</option>
+              {/* ✅ Match status values with slice */}
+              <option value="To Do">To Do</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Done">Done</option>
             </select>
           </div>
 
@@ -88,7 +111,7 @@ const EditTaskModal = ({ onClose }) => {
               Description
             </label>
             <textarea
-              id="description"
+              name="description"
               rows="3"
               value={formData.description}
               onChange={handleChange}

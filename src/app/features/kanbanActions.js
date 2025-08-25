@@ -128,4 +128,13 @@ export const columnsSlice = createSlice({
 export const { addColumn, deleteColumn, addTask, editTask, deleteTask } =
   columnsSlice.actions;
 
+// ✅ Selector to get task by ID
+export const selectTaskById = (state, taskId) => {
+  for (const col of state.columns.columnsData) {
+    const task = col.tasks.find((t) => t.id === taskId);
+    if (task) return task;
+  }
+  return null;
+};
+
 export default columnsSlice.reducer;
