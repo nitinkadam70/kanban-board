@@ -15,10 +15,7 @@ const ThemeToggler = () => {
   }, [darkMode]);
 
   return (
-    <button
-      onClick={() => setDarkMode(!darkMode)}
-      className="p-2 rounded-full border bg-gray-200 dark:bg-gray-800 dark:border-gray-700"
-    >
+    <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full">
       {!darkMode ? (
         <Icon
           icon="line-md:sunny-outline-to-moon-alt-loop-transition"

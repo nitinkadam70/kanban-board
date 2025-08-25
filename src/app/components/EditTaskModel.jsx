@@ -6,7 +6,7 @@ import { editTask, selectTaskById } from "../features/kanbanActions";
 
 const EditTaskModal = ({ id, onClose }) => {
   const dispatch = useDispatch();
-
+  const { columnsData } = useSelector((state) => state.columns);
   // Manage all fields in one state object
   const [formData, setFormData] = useState({
     id: "",
@@ -96,9 +96,11 @@ const EditTaskModal = ({ id, onClose }) => {
               className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             >
               {/* ✅ Match status values with slice */}
-              <option value="To Do">To Do</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Done">Done</option>
+              {columnsData?.map((column) => (
+                <option key={column.id} value={column.columnName}>
+                  {column.columnName}
+                </option>
+              ))}
             </select>
           </div>
 

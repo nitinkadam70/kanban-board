@@ -12,12 +12,14 @@ export default function Home() {
       <Header />
       <div className="w-full max-auto">
         <div className="w-full flex justify-around items-center gap-2 ml-2 overflow-x-auto">
-          {columnsData.map((column) => (
+          {columnsData.map((column, index) => (
             <div key={column.id} className="w-full mx-auto">
               <TaskColumn
+                id={column.id}
                 tasks={column?.tasks}
                 columnName={column.columnName}
                 columnColor={column.columnColor}
+                index={index}
               />
             </div>
           ))}

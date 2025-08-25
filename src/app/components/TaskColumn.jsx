@@ -1,6 +1,8 @@
 import React from "react";
 import TaskCard from "./TaskCard";
 import { Icon } from "@iconify/react";
+import { useDispatch } from "react-redux";
+import { deleteColumn } from "../features/kanbanActions";
 
 const colorClasses = {
   blue: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
@@ -16,7 +18,16 @@ const colorClasses = {
     "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300",
 };
 
-const TaskColumn = ({ columnName, columnColor, tasks }) => {
+const TaskColumn = ({ columnName, columnColor, tasks, index, id }) => {
+  const dispatch = useDispatch();
+  const handleDeleteColumn = (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this column and all its tasks?"
+    );
+    if (confirmDelete) {
+      dispatch(deleteColumn(id));
+    }
+  };
   return (
     <div className="min-w-[300px] w-full max-w-[400px] h-[600px] border-2 border-blue-400 rounded-md shadow-md flex flex-col">
       <div className="font-bold flex justify-center relative text-white text-lg text-center p-2 border-b-2 border-blue-400">
@@ -25,10 +36,13 @@ const TaskColumn = ({ columnName, columnColor, tasks }) => {
         >
           • {columnName}
         </span>
-        <Icon
-          icon="mdi:delete"
-          className="w-5 h-5 hover:text-blue-200 text-blue-100 absolute right-2 top-3"
-        />
+        {index > 2 && (
+          <Icon
+            onClick={() => handleDeleteColumn(id)}
+            icon="mdi:delete"
+            className="w-5 h-5 hover:text-blue-200 text-blue-100 absolute right-2 top-3"
+          />
+        )}
       </div>
       <div>
         {tasks.map((task) => (
