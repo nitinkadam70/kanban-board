@@ -3,12 +3,27 @@
 import { Icon } from "@iconify/react";
 import React, { useEffect, useRef, useState } from "react";
 import EditTaskModal from "./EditTaskModel";
+import { deleteTask } from "../features/kanbanActions";
+import { useDispatch } from "react-redux";
 
 const TaskCard = ({ task }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
   const [isOpenEditModel, setIsOpenEditModel] = useState(false);
   const { title, description, id } = task;
+  const dispatch = useDispatch();
+
+  // Handle Delete Task
+  const handleDeleteTask = (taskId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+    if (confirmDelete) {
+      console.log("taskId 1", taskId);
+      dispatch(deleteTask(taskId));
+      setShowMenu(false);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -46,7 +61,7 @@ const TaskCard = ({ task }) => {
                 </button>
                 <button
                   className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-600"
-                  onClick={() => alert("Delete Task Clicked")}
+                  onClick={() => handleDeleteTask(id)}
                 >
                   Delete Task
                 </button>

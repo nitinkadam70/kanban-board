@@ -99,8 +99,8 @@ const AddTaskModal = () => {
                 >
                   <option value="">Select Status</option>
                   {columnsData?.map((column) => (
-                    <option key={column.id} value={column.title}>
-                      {column.title}
+                    <option key={column.id} value={column.columnName}>
+                      {column.columnName}
                     </option>
                   ))}
                 </select>

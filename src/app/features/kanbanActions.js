@@ -85,7 +85,7 @@ export const columnsSlice = createSlice({
 
       // Find column by status (title)
       const column = state.columnsData.find(
-        (col) => col.title.toLowerCase() === status.toLowerCase()
+        (col) => col.columnName.toLowerCase() === status.toLowerCase()
       );
 
       if (column) {
@@ -142,8 +142,7 @@ export const columnsSlice = createSlice({
     },
 
     deleteTask: (state, action) => {
-      const { taskId } = action.payload;
-
+      const taskId = action.payload;
       for (const col of state.columnsData) {
         col.tasks = col.tasks.filter((t) => t.id !== taskId);
       }
