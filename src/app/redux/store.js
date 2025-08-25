@@ -14,6 +14,7 @@ import {
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ["searchQuery"], // won't be persisted
 };
 
 const persistedReducer = persistReducer(persistConfig, kanbanReducer);
@@ -25,7 +26,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        // 👇 Ignore redux-persist actions
+        //  Ignoring redux-persist actions
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),

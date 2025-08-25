@@ -30,6 +30,7 @@ const initialState = {
       tasks: [],
     },
   ],
+  searchQuery: "",
 };
 
 // Add dummy task if all columns are empty
@@ -147,19 +148,43 @@ export const columnsSlice = createSlice({
         col.tasks = col.tasks.filter((t) => t.id !== taskId);
       }
     },
+
+    searchTask: (state, action) => {
+      state.searchQuery = action.payload.toLowerCase();
+    },
   },
 });
 
-export const { addColumn, deleteColumn, addTask, editTask, deleteTask } =
-  columnsSlice.actions;
+export const {
+  addColumn,
+  deleteColumn,
+  addTask,
+  editTask,
+  deleteTask,
+  searchTask,
+} = columnsSlice.actions;
 
-// ✅ Selector to get task by ID
+// Selector to get task by ID
 export const selectTaskById = (state, taskId) => {
   for (const col of state.columns.columnsData) {
     const task = col.tasks.find((t) => t.id === taskId);
     if (task) return task;
   }
   return null;
+};
+
+// for Search Task
+export const searchTaskByTitle = (state) => {
+  const { columnsData, searchQuery } = state.columns;
+
+  if (!searchQuery) return columnsData;
+
+  return columnsData.map((col) => ({
+    ...col,
+    tasks: col.tasks.filter((task) =>
+      task.title.toLowerCase().includes(searchQuery)
+    ),
+  }));
 };
 
 export default columnsSlice.reducer;

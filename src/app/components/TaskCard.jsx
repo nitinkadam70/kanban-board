@@ -39,7 +39,10 @@ const TaskCard = ({ task }) => {
 
   return (
     <>
-      <div className="fade-in-up max-w-sm p-4 bg-gray-800 border border-gray-700 rounded-lg shadow-sm m-4">
+      <div
+        draggable
+        className="fade-in-up max-w-sm p-4 bg-gray-800 border border-gray-700 rounded-lg shadow-sm m-4"
+      >
         <div className="flex items-center justify-between mb-3 relative">
           <Icon icon="mingcute:task-2-fill" className="w-7 h-7 text-gray-400" />
 
