@@ -14,6 +14,9 @@ const EditTaskModal = ({ id, onClose }) => {
     title: "",
     status: "",
     description: "",
+    assignTo: "0",
+    startDate: "",
+    endDate: "",
   });
 
   //  Get task by ID using selector
@@ -28,7 +31,7 @@ const EditTaskModal = ({ id, onClose }) => {
         title: task.title,
         status: task.status,
         description: task.description,
-        assignTo: task.assignTo || "",
+        assignTo: task.assignTo || "0",
         startDate: task.startDate || "",
         endDate: task.endDate || "",
       });

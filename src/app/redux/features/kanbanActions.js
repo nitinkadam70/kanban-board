@@ -6,9 +6,9 @@ const dummyTask = {
   title: "✨ Add your first task",
   description: "Create a new task to get started with your to-do list.",
   status: "To Do",
-  assignTo: "",
-  startDate: "",
-  endDate: "",
+  assignTo: "0",
+  startDate: "2025-07-30",
+  endDate: "2025-08-10",
 };
 
 // Initial State
@@ -112,7 +112,7 @@ export const columnsSlice = createSlice({
           title,
           description,
           status,
-          assignTo,
+          assignTo: Number(assignTo) || "0",
           startDate,
           endDate,
         });

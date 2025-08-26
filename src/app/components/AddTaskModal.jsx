@@ -30,12 +30,26 @@ const AddTaskModal = () => {
     const { title, description, status, startDate, endDate, assignTo } =
       newTask;
     console.log("New Task:", newTask);
-    if (!title || !description || !status || !startDate || !endDate) {
+    if (
+      !title ||
+      !description ||
+      !status ||
+      !startDate ||
+      !endDate ||
+      !assignTo
+    ) {
       alert("Please fill in all fields");
       return;
     }
     dispatch(
-      addTask({ title, description, status, startDate, endDate, assignTo })
+      addTask({
+        title,
+        description,
+        status,
+        startDate,
+        endDate,
+        assignTo: Number(assignTo) || "0",
+      })
     );
     setNewTask({
       title: "",
@@ -134,6 +148,8 @@ const AddTaskModal = () => {
                   onChange={handleChange}
                   className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 >
+                  {" "}
+                  <option value="">Select User</option>
                   {/* ✅ Match status values with slice */}
                   {users?.map((user) => (
                     <option key={user.id} value={user.id}>
