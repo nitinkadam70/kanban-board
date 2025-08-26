@@ -1,8 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Kanban Board
 
-## Getting Started
+This is a **Kanban Board** project built using **Next.js** and **Tailwind CSS**. It allows users to manage tasks across multiple columns with drag-and-drop functionality, search, filters, and persistent state.
 
-First, run the development server:
+---
+
+## Project Setup
+
+### Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+## Run Development Server
 
 ```bash
 npm run dev
@@ -10,28 +24,50 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
+in your browser to see the project. The page auto-updates as you edit files.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Build and Start for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+ npm run build
+npm run start
+```
 
-## Learn More
+## Tech Stack
+- Next.js – Provides fast setup, React optimizations, and easy deployment with Vercel.
 
-To learn more about Next.js, take a look at the following resources:
+- React – For building the UI components.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Tailwind CSS – Utility-first CSS framework for rapid and responsive styling.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Redux Toolkit – State management for task and column data.
 
-## Deploy on Vercel
+- Redux Persist – Persist board state in localStorage.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- @iconify/react – Icons for UI elements.
+````
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Features
 
+Board Layout: Default 3 columns (To Do, In Progress, Done) with the ability to add and delete custom columns.
+
+- Task Management: Add, edit, delete tasks with title, description, status, start date, end date, and assign tasks to users.
+
+- Drag & Drop: Smooth movement of tasks between columns.
+
+- Persistence: Task and board state saved in localStorage using Redux Persist.
+
+- Search & Filter: Quickly find tasks by name or assigned user.
+
+- Responsive UI: Works well on desktop, tablet, and mobile devices.
+
+## File Structure
+
+- app/page.js – Main entry page of the app.
+
+- components/ – React components for tasks, columns, filters, and buttons.
+
+- redux/ – Redux slices, actions, and store configuration.
