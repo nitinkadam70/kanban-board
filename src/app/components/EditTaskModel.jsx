@@ -101,7 +101,7 @@ const EditTaskModal = ({ id, onClose }) => {
               onChange={handleChange}
               className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             >
-              {/* ✅ Match status values with slice */}
+              {/* Match status values with slice */}
               {columnsData?.map((column) => (
                 <option key={column.id} value={column.columnName}>
                   {column.columnName}
@@ -123,7 +123,7 @@ const EditTaskModal = ({ id, onClose }) => {
               onChange={handleChange}
               className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             >
-              {/* ✅ Match status values with slice */}
+              {/*  Match status values with slice */}
               {users?.map((user, index) => (
                 <option key={user.id - 1} value={index}>
                   {user.name}

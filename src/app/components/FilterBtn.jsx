@@ -40,7 +40,7 @@ const FilterSortResetBtn = () => {
       {openMenu && (
         <div className="absolute top-full left-0 mt-2 z-10 bg-gray-800 text-white rounded-lg shadow-lg w-56">
           <div className="p-2 text-xs font-semibold border-b border-gray-700">
-            Show Tasks Assigned to a Specific User
+            Filter Tasks by User
           </div>
           {users.map((user, index) => (
             <div

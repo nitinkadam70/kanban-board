@@ -76,7 +76,7 @@ const TaskCard = ({ task, ColumnColor }) => {
         <p className="mb-3 font-normal text-gray-400">{description}</p>
 
         <div className="flex items-center justify-between mt-4">
-          {/* ✅ Assigned user badge */}
+          {/* Assigned user badge */}
           {assignTo && users[Number(assignTo)] && (
             <div className="flex items-center gap-2 bg-gray-800 p-2 rounded-lg shadow-lg w-max">
               <img
@@ -90,7 +90,7 @@ const TaskCard = ({ task, ColumnColor }) => {
             </div>
           )}
 
-          {/* ✅ Dates section (only if provided) */}
+          {/* Dates section (only if provided) */}
           {(startDate || endDate) && (
             <div className="mt-3 space-y-1 text-xs text-gray-400">
               {startDate && (
