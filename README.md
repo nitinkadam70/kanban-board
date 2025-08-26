@@ -48,11 +48,11 @@ npm run start
 - Redux Persist – Persist board state in localStorage.
 
 - @iconify/react – Icons for UI elements.
-````
+
 
 ## Features
 
-Board Layout: Default 3 columns (To Do, In Progress, Done) with the ability to add and delete custom columns.
+- Board Layout: Default 3 columns (To Do, In Progress, Done) with the ability to add and delete custom columns.
 
 - Task Management: Add, edit, delete tasks with title, description, status, start date, end date, and assign tasks to users.
 
