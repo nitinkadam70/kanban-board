@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import TaskColumn from "./components/TaskColumn";
 import { useSelector } from "react-redux";
-import { searchTaskByTitle } from "./features/kanbanActions";
+import { searchTaskByTitle } from "./redux/features/kanbanActions";
 
 export default function Home() {
   // const { columnsData } = useSelector((state) => state.columns);

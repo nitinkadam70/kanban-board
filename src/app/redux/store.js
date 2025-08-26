@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import kanbanReducer from "../features/kanbanActions";
+import kanbanReducer from "./features/kanbanActions";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import {

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
-import { addColumn } from "../features/kanbanActions";
+import { addColumn } from "../redux/features/kanbanActions";
 import { useDispatch } from "react-redux";
 
 const AddColumnModal = () => {

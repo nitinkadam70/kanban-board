@@ -3,14 +3,14 @@
 import { Icon } from "@iconify/react";
 import React, { useEffect, useRef, useState } from "react";
 import EditTaskModal from "./EditTaskModel";
-import { deleteTask } from "../features/kanbanActions";
+import { deleteTask } from "../redux/features/kanbanActions";
 import { useDispatch } from "react-redux";
-
-const TaskCard = ({ task }) => {
+import { users } from "./Users";
+const TaskCard = ({ task, ColumnColor }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
   const [isOpenEditModel, setIsOpenEditModel] = useState(false);
-  const { title, description, id } = task;
+  const { title, description, id, assignTo, startDate, endDate } = task;
   const dispatch = useDispatch();
 
   // Handle Delete Task
@@ -19,7 +19,6 @@ const TaskCard = ({ task }) => {
       "Are you sure you want to delete this task?"
     );
     if (confirmDelete) {
-      // console.log("taskId 1", taskId);
       dispatch(deleteTask(taskId));
       setShowMenu(false);
     }
@@ -39,10 +38,7 @@ const TaskCard = ({ task }) => {
 
   return (
     <>
-      <div
-        draggable
-        className="fade-in-up max-w-sm p-4 bg-gray-800 border border-gray-700 rounded-lg shadow-sm m-4"
-      >
+      <div className="fade-in-up max-w-sm p-4 cursor-grab bg-gray-800 border border-gray-700 rounded-lg shadow-sm m-4">
         <div className="flex items-center justify-between mb-3 relative">
           <Icon icon="mingcute:task-2-fill" className="w-7 h-7 text-gray-400" />
 
@@ -78,7 +74,48 @@ const TaskCard = ({ task }) => {
         </h5>
 
         <p className="mb-3 font-normal text-gray-400">{description}</p>
+
+        <div className="flex items-center justify-between mt-4">
+          {/* ✅ Assigned user badge */}
+          {assignTo && users[Number(assignTo)] && (
+            <div className="mt-2 z-10 flex items-center gap-2 bg-white dark:bg-gray-800 p-2 rounded-lg shadow-lg w-max">
+              <img
+                className="w-5 h-5 rounded-full"
+                src={users[Number(assignTo)].image}
+                alt={users[Number(assignTo)].name}
+              />
+              <div className="text-xs dark:text-white whitespace-nowrap">
+                {users[Number(assignTo)].name}
+              </div>
+            </div>
+          )}
+
+          {/* ✅ Dates section (only if provided) */}
+          {(startDate || endDate) && (
+            <div className="mt-3 space-y-1 text-xs text-gray-400">
+              {startDate && (
+                <p>
+                  <Icon
+                    icon="mdi:calendar-start"
+                    className="inline w-4 h-4 mr-1 text-gray-400"
+                  />
+                  Start: {startDate}
+                </p>
+              )}
+              {endDate && (
+                <p>
+                  <Icon
+                    icon="mdi:calendar-end"
+                    className="inline w-4 h-4 mr-1 text-gray-400"
+                  />
+                  End: {endDate}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
       </div>
+
       {isOpenEditModel && (
         <EditTaskModal id={id} onClose={() => setIsOpenEditModel(false)} />
       )}

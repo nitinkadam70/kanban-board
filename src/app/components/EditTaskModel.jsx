@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { editTask, selectTaskById } from "../features/kanbanActions";
-
+import { editTask, selectTaskById } from "../redux/features/kanbanActions";
+import { users } from "./Users";
+import DatePickerInput from "./DatePickerInput";
 const EditTaskModal = ({ id, onClose }) => {
   const dispatch = useDispatch();
   const { columnsData } = useSelector((state) => state.columns);
@@ -27,6 +28,9 @@ const EditTaskModal = ({ id, onClose }) => {
         title: task.title,
         status: task.status,
         description: task.description,
+        assignTo: task.assignTo || "",
+        startDate: task.startDate || "",
+        endDate: task.endDate || "",
       });
     }
   }, [task]);
@@ -34,13 +38,13 @@ const EditTaskModal = ({ id, onClose }) => {
   // Handle change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value })); // ✅ fixed bug
+    setFormData((prev) => ({ ...prev, [name]: value })); //  fixed bug
   };
 
   //  Handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(editTask({ taskId: formData.id, updates: formData })); // ✅ update redux
+    dispatch(editTask({ taskId: formData.id, updates: formData })); //  update redux
     onClose();
   };
 
@@ -80,7 +84,6 @@ const EditTaskModal = ({ id, onClose }) => {
               required
             />
           </div>
-
           {/* Status */}
           <div>
             <label
@@ -103,6 +106,45 @@ const EditTaskModal = ({ id, onClose }) => {
               ))}
             </select>
           </div>
+          {/* Assign To */}
+          <div>
+            <label
+              htmlFor="assignTO"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Assign To
+            </label>
+            <select
+              name="assignTo"
+              value={formData.assignTo}
+              onChange={handleChange}
+              className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            >
+              {/* ✅ Match status values with slice */}
+              {users?.map((user, index) => (
+                <option key={user.id - 1} value={index}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex justify-around items-center gap-2">
+            {/* Start Date */}
+            <DatePickerInput
+              name="startDate"
+              value={formData.startDate}
+              handleChange={handleChange}
+              placeholder="Select start date"
+            />
+
+            {/* End Date */}
+            <DatePickerInput
+              name="endDate"
+              value={formData.endDate}
+              handleChange={handleChange}
+              placeholder="Select end date"
+            />
+          </div>
 
           {/* Description */}
           <div>
@@ -120,7 +162,6 @@ const EditTaskModal = ({ id, onClose }) => {
               className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
           </div>
-
           {/* Footer */}
           <div className="flex justify-end space-x-2 pt-3 border-t border-gray-200 dark:border-gray-600">
             <button

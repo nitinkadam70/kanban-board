@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useDispatch } from "react-redux";
-import { searchTask } from "../features/kanbanActions";
+import { searchTask } from "../redux/features/kanbanActions";
 
 const TaskSearchBar = () => {
   const dispatch = useDispatch();

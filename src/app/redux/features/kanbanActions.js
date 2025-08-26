@@ -6,6 +6,9 @@ const dummyTask = {
   title: "✨ Add your first task",
   description: "Create a new task to get started with your to-do list.",
   status: "To Do",
+  assignTo: "",
+  startDate: "",
+  endDate: "",
 };
 
 // Initial State
@@ -82,7 +85,21 @@ export const columnsSlice = createSlice({
 
     // ========== TASK OPERATIONS ==========
     addTask: (state, action) => {
-      const { id, title, description, status } = action.payload;
+      const { id, title, description, status, assignTo, startDate, endDate } =
+        action.payload;
+
+      // Prevent duplicate Task Title
+      const taskNameExists = state.columnsData.some((col) =>
+        col.tasks.some(
+          (task) => task.title.toLowerCase() === title.toLowerCase()
+        )
+      );
+      if (taskNameExists) {
+        if (typeof window !== "undefined") {
+          alert("Use another task Title, it's already exists!");
+        }
+        return;
+      }
 
       // Find column by status (title)
       const column = state.columnsData.find(
@@ -95,6 +112,9 @@ export const columnsSlice = createSlice({
           title,
           description,
           status,
+          assignTo,
+          startDate,
+          endDate,
         });
       } else {
         if (typeof window !== "undefined") {
