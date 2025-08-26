@@ -65,11 +65,17 @@ const TaskColumn = ({ columnName, columnColor, tasks, index, id }) => {
     <div className="min-w-[300px] w-full max-w-[400px] h-[550px] border-2 border-blue-400 rounded-md shadow-md flex flex-col">
       {/* Column Header */}
       <div className="font-bold flex justify-center relative text-white text-lg text-center p-2 border-b-2 border-blue-400">
-        <span
-          className={`${colorClasses[columnColor]} text-[14px] me-2 px-2.5 py-0.5 rounded-full font-semibold`}
-        >
-          • {columnName}
-        </span>
+        <div>
+          <span
+            className={`${colorClasses[columnColor]} text-[14px] me-2 px-2.5 py-0.5 rounded-full font-semibold`}
+          >
+            • {columnName}
+          </span>
+          <span style={{ color: columnColor }} className="text-xs">
+            {" "}
+            {tasks?.length}
+          </span>
+        </div>
         {index > 2 && (
           <Icon
             onClick={() => handleDeleteColumn(id)}
@@ -96,7 +102,7 @@ const TaskColumn = ({ columnName, columnColor, tasks, index, id }) => {
             onDragStart={(e) => handleDragStart(e, task)}
             onDragEnd={handleDragEnd}
           >
-            <TaskCard task={task}  />
+            <TaskCard task={task} />
           </div>
         ))}
       </div>

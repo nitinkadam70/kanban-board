@@ -34,6 +34,7 @@ const initialState = {
     },
   ],
   searchQuery: "",
+  setFilterUser: null,
 };
 
 // Add dummy task if all columns are empty
@@ -169,8 +170,14 @@ export const columnsSlice = createSlice({
       }
     },
 
+    // Search Task
     searchTask: (state, action) => {
       state.searchQuery = action.payload.toLowerCase();
+    },
+
+    // FIlter Task by Assigned user
+    setFilterUser: (state, action) => {
+      state.filterUser = action.payload;
     },
   },
 });
@@ -182,6 +189,7 @@ export const {
   editTask,
   deleteTask,
   searchTask,
+  setFilterUser,
 } = columnsSlice.actions;
 
 // Selector to get task by ID
@@ -204,6 +212,27 @@ export const searchTaskByTitle = (state) => {
     tasks: col.tasks.filter((task) =>
       task.title.toLowerCase().includes(searchQuery)
     ),
+  }));
+};
+
+// Filter Task by User
+export const selectFilteredColumns = (state) => {
+  const { columnsData, searchQuery, filterUser } = state.columns;
+  console.log(
+    "Filtering columns with searchQuery:",
+    searchQuery,
+    "and filterUser:",
+    filterUser
+  );
+
+  return columnsData.map((col) => ({
+    ...col,
+    tasks: col.tasks.filter((task) => {
+      const matchesSearch = task.title.toLowerCase().includes(searchQuery);
+      const matchesUser =
+        !filterUser || Number(task.assignTo + 1) === Number(filterUser);
+      return matchesSearch && matchesUser;
+    }),
   }));
 };
 
