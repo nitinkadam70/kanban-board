@@ -10,7 +10,7 @@ const AddTaskModal = () => {
     title: "",
     description: "",
     status: "To do",
-    assignTo: "0",
+    assignTo: "1",
     startDate: new Date().toISOString().split("T")[0],
     endDate: new Date().toISOString().split("T")[0],
   });
@@ -39,7 +39,7 @@ const AddTaskModal = () => {
         status,
         startDate,
         endDate,
-        assignTo: assignTo,
+        assignTo,
       })
     );
     setNewTask({

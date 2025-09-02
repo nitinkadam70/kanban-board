@@ -48,7 +48,7 @@ const FilterSortResetBtn = () => {
               className={`flex items-center gap-2 p-2 cursor-pointer hover:bg-gray-700 ${
                 selectedUser === user.id ? "bg-gray-700" : ""
               }`}
-              onClick={() => handleUserClick(user.id)}
+              onClick={() => handleUserClick(Number(user?.id))}
             >
               <img
                 src={user.image}

@@ -14,7 +14,7 @@ const EditTaskModal = ({ id, onClose }) => {
     title: "",
     status: "",
     description: "",
-    assignTo: "0",
+    assignTo: "1",
     startDate: "",
     endDate: "",
   });
@@ -31,7 +31,7 @@ const EditTaskModal = ({ id, onClose }) => {
         title: task.title,
         status: task.status,
         description: task.description,
-        assignTo: task.assignTo || "0",
+        assignTo: task.assignTo || "1",
         startDate: task.startDate || "",
         endDate: task.endDate || "",
       });
@@ -124,8 +124,8 @@ const EditTaskModal = ({ id, onClose }) => {
               className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             >
               {/*  Match status values with slice */}
-              {users?.map((user, index) => (
-                <option key={user.id - 1} value={index}>
+              {users?.map((user) => (
+                <option key={user?.id} value={user?.id}>
                   {user.name}
                 </option>
               ))}

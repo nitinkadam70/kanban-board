@@ -6,7 +6,7 @@ const dummyTask = {
   title: "✨ Add your first task",
   description: "Create a new task to get started with your to-do list.",
   status: "To Do",
-  assignTo: "0",
+  assignTo: "1",
   startDate: "2025-07-30",
   endDate: "2025-08-10",
 };
@@ -113,7 +113,7 @@ export const columnsSlice = createSlice({
           title,
           description,
           status,
-          assignTo: Number(assignTo) || "0",
+          assignTo,
           startDate,
           endDate,
         });
@@ -218,6 +218,7 @@ export const searchTaskByTitle = (state) => {
 // Filter Task by User
 export const selectFilteredColumns = (state) => {
   const { columnsData, searchQuery, filterUser } = state.columns;
+  console.log("Current filterUser:", filterUser);
   console.log(
     "Filtering columns with searchQuery:",
     searchQuery,
@@ -229,8 +230,8 @@ export const selectFilteredColumns = (state) => {
     ...col,
     tasks: col.tasks.filter((task) => {
       const matchesSearch = task.title.toLowerCase().includes(searchQuery);
-      const matchesUser =
-        !filterUser || Number(task.assignTo + 1) === Number(filterUser);
+      
+      const matchesUser = !filterUser || task.assignTo == filterUser;
       return matchesSearch && matchesUser;
     }),
   }));

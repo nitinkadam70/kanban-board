@@ -2,8 +2,12 @@
 
 body {
   background-color: oklch(21% 0.034 264.665);
-  width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 @keyframes fadeInUp {
   0% {

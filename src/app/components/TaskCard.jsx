@@ -101,18 +101,23 @@ const TaskCard = ({ task, ColumnColor }) => {
 
         <div className="flex flex-col lg:flex-row  items-center justify-between mt-4">
           {/* Assigned user badge */}
-          {assignTo && users[Number(assignTo)] && (
-            <div className="flex items-center gap-2 bg-gray-800 p-2 rounded-lg shadow-lg w-max">
-              <img
-                className="w-5 h-5 rounded-full"
-                src={users[Number(assignTo)].image}
-                alt={users[Number(assignTo)].name}
-              />
-              <div className="text-xs text-white whitespace-nowrap">
-                {users[Number(assignTo)].name}
-              </div>
-            </div>
-          )}
+          {(() => {
+            const user = users.find((u) => u.id == assignTo);
+            return (
+              user && (
+                <div className="flex items-center gap-2 bg-gray-800 p-2 rounded-lg shadow-lg w-max">
+                  <img
+                    className="w-5 h-5 rounded-full"
+                    src={user.image}
+                    alt={user.name}
+                  />
+                  <div className="text-xs text-white whitespace-nowrap">
+                    {user.name}
+                  </div>
+                </div>
+              )
+            );
+          })()}
 
           {/* Dates section (only if provided) */}
           {(startDate || endDate) && (
