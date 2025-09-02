@@ -1,20 +1,18 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask } from "../redux/features/kanbanActions";
-import { users } from "./Users";
-import DatePickerInput from "./DatePickerInput";
 
 const AddTaskModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
-    status: "",
-    assignTo: "" || 0,
-    startDate: "",
-    endDate: "",
+    status: "To do",
+    assignTo: "0",
+    startDate: new Date().toISOString().split("T")[0],
+    endDate: new Date().toISOString().split("T")[0],
   });
   const dispatch = useDispatch();
   const { columnsData } = useSelector((state) => state.columns);
@@ -29,18 +27,11 @@ const AddTaskModal = () => {
     e.preventDefault();
     const { title, description, status, startDate, endDate, assignTo } =
       newTask;
-    console.log("New Task:", newTask);
-    if (
-      !title ||
-      !description ||
-      !status ||
-      !startDate ||
-      !endDate ||
-      !assignTo
-    ) {
+    if (!title || !description) {
       alert("Please fill in all fields");
       return;
     }
+    console.log("New Task:", newTask);
     dispatch(
       addTask({
         title,
@@ -48,16 +39,12 @@ const AddTaskModal = () => {
         status,
         startDate,
         endDate,
-        assignTo: Number(assignTo) || "0",
+        assignTo: assignTo,
       })
     );
     setNewTask({
       title: "",
       description: "",
-      status: "",
-      startDate: "",
-      endDate: "",
-      assignTo: "",
     });
     setIsOpen(false);
   };
@@ -110,69 +97,6 @@ const AddTaskModal = () => {
                   placeholder="Enter Task Title"
                   className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   required
-                />
-              </div>
-
-              {/* Status */}
-              <div>
-                <label
-                  htmlFor="status"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Status
-                </label>
-                <select
-                  name="status"
-                  onChange={handleChange}
-                  className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                >
-                  <option value="">Select Status</option>
-                  {columnsData?.map((column) => (
-                    <option key={column.id} value={column.columnName}>
-                      {column.columnName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {/* Assign To */}
-              <div>
-                <label
-                  htmlFor="assignTO"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Assign To
-                </label>
-                <select
-                  name="assignTo"
-                  value={newTask.assignTo || 0}
-                  onChange={handleChange}
-                  className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                >
-                  {" "}
-                  <option value="">Select User</option>
-                  {/*  Match status values with slice */}
-                  {users?.map((user) => (
-                    <option key={user.id} value={user.id}>
-                      {user.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex justify-around items-center gap-2">
-                {/* Start Date */}
-                <DatePickerInput
-                  name="startDate"
-                  value={newTask.startDate}
-                  handleChange={handleChange}
-                  placeholder="Select start date"
-                />
-
-                {/* End Date */}
-                <DatePickerInput
-                  name="endDate"
-                  value={newTask.endDate}
-                  handleChange={handleChange}
-                  placeholder="Select end date"
                 />
               </div>
 

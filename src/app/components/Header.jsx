@@ -19,21 +19,21 @@ const Header = () => {
       {/* Sub-header with controls */}
       <div
         className="
-          flex flex-col sm:flex-row 
-          justify-between sm:items-center 
-          px-4 py-3 gap-3 
+          flex flex-col md:flex-row 
+          justify-between md:items-center 
+          px-4 py-3 gap-4 
           text-white dark:text-gray-100
         "
       >
         {/* Left side */}
-        <div className="font-semibold text-lg text-center sm:text-left">
+        <div className="flex justify-center md:justify-start">
           <Users />
         </div>
 
         {/* Right side controls */}
         <div
           className="
-            flex flex-wrap justify-center sm:justify-end 
+            flex flex-wrap justify-center md:justify-end 
             gap-2 items-center
           "
         >

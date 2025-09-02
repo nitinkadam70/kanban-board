@@ -38,12 +38,20 @@ const TaskCard = ({ task, ColumnColor }) => {
 
   return (
     <>
-      <div className="fade-in-up max-w-sm p-4 cursor-grab bg-gray-800 border border-gray-700 rounded-lg shadow-sm m-4">
+      {/* Card */}
+      <div
+        onClick={() => setIsOpenEditModel(true)}
+        className="fade-in-up max-w-sm p-4 cursor-pointer bg-gray-800 border border-gray-700 rounded-lg shadow-sm m-4"
+      >
         <div className="flex items-center justify-between mb-3 relative">
           <Icon icon="mingcute:task-2-fill" className="w-7 h-7 text-gray-400" />
 
           {/* Card menu */}
-          <div className="relative" ref={menuRef}>
+          <div
+            className="relative"
+            ref={menuRef}
+            onClick={(e) => e.stopPropagation()}
+          >
             <Icon
               icon="charm:menu-kebab"
               className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-200"
@@ -69,13 +77,29 @@ const TaskCard = ({ task, ColumnColor }) => {
           </div>
         </div>
 
-        <h5 className="mb-2 text-xl font-semibold tracking-tight text-white">
+        <h5
+          className="
+    mb-2 
+    text-lg sm:text-xl lg:text-2xl 
+    font-semibold tracking-tight text-white
+    text-center lg:text-left
+  "
+        >
           {title}
         </h5>
 
-        <p className="mb-3 font-normal text-gray-400">{description}</p>
+        <p
+          className="
+    mb-3 
+    text-sm sm:text-base lg:text-lg 
+    font-normal text-gray-400
+    text-center lg:text-left
+  "
+        >
+          {description}
+        </p>
 
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex flex-col lg:flex-row  items-center justify-between mt-4">
           {/* Assigned user badge */}
           {assignTo && users[Number(assignTo)] && (
             <div className="flex items-center gap-2 bg-gray-800 p-2 rounded-lg shadow-lg w-max">
@@ -116,6 +140,7 @@ const TaskCard = ({ task, ColumnColor }) => {
         </div>
       </div>
 
+      {/* Edit Modal */}
       {isOpenEditModel && (
         <EditTaskModal id={id} onClose={() => setIsOpenEditModel(false)} />
       )}

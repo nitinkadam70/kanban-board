@@ -97,6 +97,7 @@ const TaskColumn = ({ columnName, columnColor, tasks, index, id }) => {
       >
         {tasks.map((task) => (
           <div
+            className="w-full"
             key={task.id}
             draggable
             onDragStart={(e) => handleDragStart(e, task)}
