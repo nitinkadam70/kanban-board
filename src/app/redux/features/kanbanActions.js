@@ -18,18 +18,21 @@ const initialState = {
       id: nanoid(),
       columnName: "To Do",
       columnColor: "gray",
+      columnOptionalName: "pending",
       tasks: [],
     },
     {
       id: nanoid(),
       columnName: "In Progress",
       columnColor: "blue",
+      columnOptionalName: "",
       tasks: [],
     },
     {
       id: nanoid(),
       columnName: "Done",
       columnColor: "green",
+      columnOptionalName: "",
       tasks: [],
     },
   ],
@@ -55,7 +58,7 @@ export const columnsSlice = createSlice({
 
       // Prevent duplicate column names
       const columnNameExists = state.columnsData.some(
-        (col) => col.columnName.toLowerCase() === columnName.toLowerCase()
+        (col) => col?.columnName?.toLowerCase() === columnName.toLowerCase()
       );
       if (columnNameExists) {
         if (typeof window !== "undefined") {
@@ -104,7 +107,7 @@ export const columnsSlice = createSlice({
 
       // Find column by status (title)
       const column = state.columnsData.find(
-        (col) => col.columnName.toLowerCase() === status.toLowerCase()
+        (col) => col?.columnName?.toLowerCase() === status.toLowerCase()
       );
 
       if (column) {
@@ -230,7 +233,7 @@ export const selectFilteredColumns = (state) => {
     ...col,
     tasks: col.tasks.filter((task) => {
       const matchesSearch = task.title.toLowerCase().includes(searchQuery);
-      
+
       const matchesUser = !filterUser || task.assignTo == filterUser;
       return matchesSearch && matchesUser;
     }),

@@ -6,24 +6,24 @@ import EditTaskModal from "./EditTaskModel";
 import { deleteTask } from "../redux/features/kanbanActions";
 import { useDispatch } from "react-redux";
 import { users } from "./Users";
-const TaskCard = ({ task, ColumnColor }) => {
+
+const TaskCard = ({ task }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const menuRef = useRef(null);
   const [isOpenEditModel, setIsOpenEditModel] = useState(false);
-  const { title, description, id, assignTo, startDate, endDate } = task;
+  const menuRef = useRef(null);
   const dispatch = useDispatch();
+
+  const { title, description, id, assignTo, startDate, endDate } = task;
 
   // Handle Delete Task
   const handleDeleteTask = (taskId) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this task?"
-    );
-    if (confirmDelete) {
+    if (window.confirm("Are you sure you want to delete this task?")) {
       dispatch(deleteTask(taskId));
       setShowMenu(false);
     }
   };
 
+  // Close menu on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -31,19 +31,19 @@ const TaskCard = ({ task, ColumnColor }) => {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const assignedUser = users.find((u) => u.id == assignTo);
 
   return (
     <>
       {/* Card */}
       <div
         onClick={() => setIsOpenEditModel(true)}
-        className="fade-in-up max-w-sm p-4 cursor-pointer bg-gray-800 border border-gray-700 rounded-lg shadow-sm m-4"
+        className="task-card fade-in-up max-w-sm"
       >
-        <div className="flex items-center justify-between mb-3 relative">
+        <div className="task-card-header">
           <Icon icon="mingcute:task-2-fill" className="w-7 h-7 text-gray-400" />
 
           {/* Card menu */}
@@ -55,19 +55,19 @@ const TaskCard = ({ task, ColumnColor }) => {
             <Icon
               icon="charm:menu-kebab"
               className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-200"
-              onClick={() => setShowMenu(!showMenu)}
+              onClick={() => setShowMenu((prev) => !prev)}
             />
 
             {showMenu && (
-              <div className="absolute right-0 mt-2 w-36 bg-gray-700 text-white rounded-md shadow-lg">
+              <div className="task-menu">
                 <button
-                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-600"
+                  className="task-menu-item"
                   onClick={() => setIsOpenEditModel(true)}
                 >
                   Edit Task
                 </button>
                 <button
-                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-600"
+                  className="task-menu-item"
                   onClick={() => handleDeleteTask(id)}
                 >
                   Delete Task
@@ -77,66 +77,34 @@ const TaskCard = ({ task, ColumnColor }) => {
           </div>
         </div>
 
-        <h5
-          className="
-    mb-2 
-    text-lg sm:text-xl lg:text-2xl 
-    font-semibold tracking-tight text-white
-    text-center lg:text-left
-  "
-        >
-          {title}
-        </h5>
+        <h5 className="task-card-title">{title}</h5>
+        <p className="task-card-desc">{description}</p>
 
-        <p
-          className="
-    mb-3 
-    text-sm sm:text-base lg:text-lg 
-    font-normal text-gray-400
-    text-center lg:text-left
-  "
-        >
-          {description}
-        </p>
+        <div className="card-user">
+          {/* Assigned user */}
+          {assignedUser && (
+            <div className="task-user">
+              <img
+                className="task-user-img"
+                src={assignedUser.image}
+                alt={assignedUser.name}
+              />
+              <div className="task-user-name">{assignedUser.name}</div>
+            </div>
+          )}
 
-        <div className="flex flex-col lg:flex-row  items-center justify-between mt-4">
-          {/* Assigned user badge */}
-          {(() => {
-            const user = users.find((u) => u.id == assignTo);
-            return (
-              user && (
-                <div className="flex items-center gap-2 bg-gray-800 p-2 rounded-lg shadow-lg w-max">
-                  <img
-                    className="w-5 h-5 rounded-full"
-                    src={user.image}
-                    alt={user.name}
-                  />
-                  <div className="text-xs text-white whitespace-nowrap">
-                    {user.name}
-                  </div>
-                </div>
-              )
-            );
-          })()}
-
-          {/* Dates section (only if provided) */}
+          {/* Dates */}
           {(startDate || endDate) && (
-            <div className="mt-3 space-y-1 text-xs text-gray-400">
+            <div className="task-dates">
               {startDate && (
                 <p>
-                  <Icon
-                    icon="mdi:calendar-start"
-                    className="inline w-4 h-4 mr-1 text-gray-400"
-                  />
+                  <Icon icon="mdi:calendar-start" className="task-date-icon" />
                   Start: {startDate}
                 </p>
               )}
               {endDate && (
                 <p>
-                  <Icon
-                    icon="mdi:calendar-end"
-                    className="inline w-4 h-4 mr-1 text-gray-400"
-                  />
+                  <Icon icon="mdi:calendar-end" className="task-date-icon" />
                   End: {endDate}
                 </p>
               )}

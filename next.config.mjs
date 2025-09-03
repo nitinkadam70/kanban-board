@@ -2,10 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    reactRemoveAttributes: [
-      "data-new-gr-c-s-check-loaded",
-      "data-gr-ext-installed",
-    ],
+    // ✅ Only valid experimental flags for Next.js 15 go here
+    turbo: {
+      rules: {},
+    },
   },
 };
 

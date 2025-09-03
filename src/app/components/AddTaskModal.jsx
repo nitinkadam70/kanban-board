@@ -14,8 +14,10 @@ const AddTaskModal = () => {
     startDate: new Date().toISOString().split("T")[0],
     endDate: new Date().toISOString().split("T")[0],
   });
+
   const dispatch = useDispatch();
   const { columnsData } = useSelector((state) => state.columns);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewTask((prev) => ({
@@ -23,40 +25,38 @@ const AddTaskModal = () => {
       [name]: value,
     }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const { title, description, status, startDate, endDate, assignTo } =
       newTask;
+
     if (!title || !description) {
       alert("Please fill in all fields");
       return;
     }
-    console.log("New Task:", newTask);
+
     dispatch(
-      addTask({
-        title,
-        description,
-        status,
-        startDate,
-        endDate,
-        assignTo,
-      })
+      addTask({ title, description, status, startDate, endDate, assignTo })
     );
     setNewTask({
       title: "",
       description: "",
+      status: "To do",
+      assignTo: "1",
+      startDate: new Date().toISOString().split("T")[0],
+      endDate: new Date().toISOString().split("T")[0],
     });
     setIsOpen(false);
   };
+
   return (
     <div>
       {/* Button to open modal */}
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="flex items-center text-white bg-[#1da1f2] hover:bg-[#1da1f2]/90 
-          focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-medium 
-          rounded-lg text-sm px-4 py-2.5 dark:focus:ring-[#1da1f2]/55"
+        className="btn-add btn-blue"
       >
         <Icon icon="mdi:plus" className="w-4 h-4 mr-2" />
         Add Task
@@ -64,24 +64,22 @@ const AddTaskModal = () => {
 
       {/* Modal */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-md">
+        <div className="modal-container">
+          <div className="modal-box fade-in-up">
             {/* Header */}
-            <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-600 p-4">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Add New Task
-              </h3>
+            <div className="modal-header">
+              <h3 className="modal-title">Add New Task</h3>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg w-8 h-8 flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white"
+                className="btn-close"
               >
                 ✕
               </button>
             </div>
 
             {/* Body */}
-            <form className="p-4 space-y-4" onSubmit={handleSubmit}>
+            <form className="modal-body" onSubmit={handleSubmit}>
               {/* Title */}
               <div>
                 <label
@@ -95,7 +93,7 @@ const AddTaskModal = () => {
                   onChange={handleChange}
                   type="text"
                   placeholder="Enter Task Title"
-                  className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  className="input-base-text"
                   required
                 />
               </div>
@@ -113,22 +111,22 @@ const AddTaskModal = () => {
                   onChange={handleChange}
                   rows="3"
                   placeholder="Enter Task Description"
-                  className="w-full p-2.5 border rounded-lg bg-gray-50 border-gray-300 text-gray-900 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                className="input-base-desc"
                 />
               </div>
 
               {/* Footer */}
-              <div className="flex justify-end space-x-2 pt-3 border-t border-gray-200 dark:border-gray-600">
+              <div className="modal-footer">
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-200 hover:bg-gray-300 text-gray-900 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
+                  className="btn-cancel"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white"
+                  className="btn-blue px-4 py-2 rounded-lg text-sm font-medium"
                 >
                   Submit
                 </button>
@@ -140,4 +138,5 @@ const AddTaskModal = () => {
     </div>
   );
 };
+
 export default AddTaskModal;

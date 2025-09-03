@@ -30,7 +30,7 @@ const FilterSortResetBtn = () => {
     <div className="relative flex items-center gap-2">
       {/* Filter Button */}
       <button
-        className="p-2 rounded-full hover:bg-gray-700 transition-colors"
+        className="toggle-btn"
         onClick={toggleMenu}
       >
         <Icon icon="mdi:filter-variant" className="w-6 h-6 text-white" />
@@ -38,7 +38,7 @@ const FilterSortResetBtn = () => {
 
       {/* Dropdown Menu */}
       {openMenu && (
-        <div className="absolute top-full left-0 mt-2 z-10 bg-gray-800 text-white rounded-lg shadow-lg w-56">
+        <div className="filter-dropdown">
           <div className="p-2 text-xs font-semibold border-b border-gray-700">
             Filter Tasks by User
           </div>
